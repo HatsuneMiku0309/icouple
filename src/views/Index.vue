@@ -1,4 +1,5 @@
 <template>
+  <Heart v-if="isShowLoad" />
   <div class="container">
     <div class="h-48">
       main
@@ -14,12 +15,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import Heart from '../components/Loaders/Heart.vue';
 
 export default defineComponent({
   name: 'Index',
-  components: { },
+  components: { Heart },
   setup() {
+    const router = useRouter();
+    const isShowLoad = ref(false);
+    const checkToken = () => {
+      let token = localStorage.getItem('token');
+      if (!token) {
+        isShowLoad.value = true;
+
+        setTimeout(() => {
+          isShowLoad.value = false;
+          router.push('/login');
+        }, 3000);
+      }
+    };
+    checkToken();
+
     const click = () => {
       console.log('click');
     };
@@ -35,6 +53,7 @@ export default defineComponent({
     };
 
     return {
+      isShowLoad,
       click,
       move,
       myTouchStartHandler,

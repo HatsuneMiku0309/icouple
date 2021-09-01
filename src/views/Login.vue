@@ -1,4 +1,5 @@
 <template>
+    <Heart v-if="isShowLoad" />
     <div class="flex flex-col items-center h-screen">
         <div class="flex flex-col p-20 items-center w-full">
             <img class="w-32" alt="Vue logo" src="../assets/logo.png">
@@ -31,11 +32,16 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
+import Heart from '../components/Loaders/Heart.vue';
 
 export default defineComponent({
     name: 'Login',
+    components: {
+        Heart
+    },
     setup() {
         const router = useRouter();
+        const isShowLoad = ref(true);
         const loginData = reactive({
             account: '',
             password: ''
@@ -52,14 +58,19 @@ export default defineComponent({
             let token = btoa(loginData.account + loginData.password);
             // let data = atob(token);
             localStorage.setItem('token', token);
-            router.push('Home');
+            isShowLoad.value = true;
+            setTimeout(() => {
+                isShowLoad.value = false;
+                router.push('/');
+            }, 3000);
         };
         const signUp = () => {
             console.log('go sign up page');
-            router.push('SignUp');
+            router.push('/signup');
         }
 
         return {
+            isShowLoad,
             ...toRefs(loginData),
             testClickScope,
             signIn,

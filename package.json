@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vite preview",
-    "build": "npm run lint-cli && vite build",
+    "build": "vite build",
     "build-staging": "vite build --mode staging && http-server ./dist",
     "dev": "vite",
     "server-cli": "vue-cli-service serve",
@@ -14,9 +14,9 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "register-service-worker": "^1.7.1",
+    "vue": "^3.2.6",
     "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0",
-    "vue": "^3.2.6"
+    "vuex": "^4.0.0-0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.6.0",
