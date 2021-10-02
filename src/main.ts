@@ -1,9 +1,9 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 // import './registerServiceWorker'
-import router from './router'
-import store from './store'
-import './main.css'
+import router from './router';
+import store from './store';
+import './main.css';
 
-console.log((<any> import.meta).env.VITE_TEST);
-createApp(App).use(store).use(router).mount('#app')
+// console.log((<any> import.meta).env.VITE_TEST);
+createApp(App).use(store).use(router).mount('#app');

@@ -2,7 +2,7 @@
   <!-- <magic-card class="h-screen w-screen absolute z-10"/> -->
   <div class="body">
     <div class="card">
-        Magic Card
+        {{ title }}
     </div>
   </div>
 </template>
@@ -12,6 +12,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'MagicCard',
+    props: ['title'],
     setup() {
         
     },
@@ -25,15 +26,21 @@ export default defineComponent({
   inherits: false;
 }
 
-
 :root {
-  --card-height: 65vh;
-  --card-width: calc(var(--card-height) / 1.5);
+  --card-height: 13rem;
+  --card-width: calc(var(--card-height) * 2.9);
+} 
+
+@media (max-width:414px){
+  :root {
+    --card-height: 13rem;
+    --card-width: calc(var(--card-height) * 1.4);
+  }  
 }
 
 .body {
-  min-height: 100vh;
-  background: #212534;
+  /*min-height: 100vh;*/
+  /*background: #212534;*/
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,10 +60,11 @@ export default defineComponent({
   text-align: center;
   display: flex;
   font-size: 1.5em;
-  color: rgb(88 199 250 / 0%);
+  color: rgb(88 199 250 / 100%);
   cursor: pointer;
 }
 
+/*
 .card:hover {
   color: rgb(88 199 250 / 100%);
   transition: color 1s;
@@ -65,7 +73,7 @@ export default defineComponent({
   animation: none;
   opacity: 0;
 }
-
+*/
 
 .card::before {
   content: "";
@@ -85,7 +93,7 @@ export default defineComponent({
 .card::after {
   position: absolute;
   content: "";
-  top: calc(var(--card-height) / 6);
+  top: calc(var(--card-height) / 10);
   left: 0;
   right: 0;
   z-index: -1;

@@ -33,6 +33,7 @@
 import { defineComponent, reactive, ref, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import Heart from '../components/Loaders/Heart.vue';
+import { post } from '../apis/login';
 
 export default defineComponent({
     name: 'Login',
@@ -41,7 +42,7 @@ export default defineComponent({
     },
     setup() {
         const router = useRouter();
-        const isShowLoad = ref(true);
+        const isShowLoad = ref(false);
         const loginData = reactive({
             account: '',
             password: ''
@@ -49,20 +50,45 @@ export default defineComponent({
         const testClickScope = () => {
             console.log('testClickScope');
         };
-        const signIn = async () => {
-            console.log('account: ' + loginData.account);
-            console.log('password: ' + loginData.password);
-            // call api verify loginData
-            // response and check cookies has token data
-            // redirect to Home page
-            let token = btoa(loginData.account + loginData.password);
-            // let data = atob(token);
-            localStorage.setItem('token', token);
+        const checkToken = () => {
+        let token = localStorage.getItem('token');
+        if (!token) {
             isShowLoad.value = true;
+
+            // demo redirect login page when no has token 
             setTimeout(() => {
-                isShowLoad.value = false;
+            isShowLoad.value = false;
+            router.replace('/login');
+            }, 300);
+        }
+        };
+        checkToken();
+        const signIn = async () => {
+            try {
+                isShowLoad.value = true;
+                // console.log('account: ' + loginData.account);
+                // console.log('password: ' + loginData.password);
+
+                // call api verify loginData
+                // let result = await post<{ token: string }>('/login', {
+                //     account: loginData.account,
+                //     password: loginData.password
+                // });
+
+                // response and set storage token data
+                let token = btoa(loginData.account + loginData.password);
+                // let data = atob(token);
+                // localStorage.setItem('token', result.token);
+                localStorage.setItem('token', token);
+
+                // redirect to Home page
                 router.push('/');
-            }, 3000);
+            } catch (err) {
+                localStorage.removeItem('token');
+                // api fail do something
+            } finally {
+                isShowLoad.value = false;
+            }
         };
         const signUp = () => {
             console.log('go sign up page');
