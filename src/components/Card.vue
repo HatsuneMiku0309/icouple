@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-full">
-        <img class="w-full h-1/2" alt="Vue logo" src="../assets/logo.png">
-        <div class="w-full h-full border-t p-2">
+        <img class="w-1/2 h-1/2 m-auto" alt="Vue logo" src="../assets/logo.png">
+        <div class="w-full h-full border-t p-2 break-words whitespace-pre-wrap">
             {{ item.title }}
         </div>
     </div>
