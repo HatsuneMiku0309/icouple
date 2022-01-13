@@ -1,6 +1,6 @@
 <template>
   <div class="relative flex flex-row flex-grow-0 flex-shrink-0 w-full justify-around h-14 bg-green-300 items-center">
-    <router-link v-for="(item, index) in menuList" :key= "index" @click="selectMenu(index)" class="relative flex justify-center items-end p-2" :to="item.to">
+    <router-link v-for="(item, index) in menuList" :key= "index" @click="selectMenu(index)" :class="{ active: item.isActive }" class="relative flex justify-center items-end p-2" :to="item.to">
       <i :class="{ [item.icon]: true, active: item.isActive }" class="relative block z-50 couple-icon before:bg-cover before:bg-no-repeat before:w-7 before:h-7 md:before:w-8 md:before:h-8 before:relative before:inline-block"></i>
       <span :class="{ active: item.isActive }" class="absolute text text-lg">{{item.title}}</span>
     </router-link>
@@ -34,9 +34,6 @@ export default defineComponent({
       menuList.forEach(item => {
         item.isActive = false;
       });
-      let element = document.getElementsByClassName('indicator')[0];
-      let position = -150 + (index * 75);
-      element.style.transform = `translateX(${position}px)`;
       menuList[index].isActive = true;
     }
 
@@ -49,6 +46,26 @@ export default defineComponent({
 </script>
 
 <style scoped>
+div a:nth-child(1).active ~ .indicator {
+  transform: translateX(calc((100vw / 5) * -2));
+}
+
+div a:nth-child(2).active ~ .indicator {
+  transform: translateX(calc((100vw / 5) * -1));
+}
+
+div a:nth-child(3).active ~ .indicator {
+  transform: translateX(calc((100vw / 5) * 0));
+}
+
+div a:nth-child(4).active ~ .indicator {
+  transform: translateX(calc((100vw / 5) * 1));
+}
+
+div a:nth-child(5).active ~ .indicator {
+  transform: translateX(calc((100vw / 5) * 2));
+}
+
 .indicator {
   position: absolute;
   top: -55%;

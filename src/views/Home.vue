@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-y-auto">
+    <div id="kk" class="overflow-y-auto relative">
         <div class="flex flex-col items-center">
             <!--<MagicCard v-for="(item, index) in posts" :key="index" :title="item.title" class="w-5/6 h-80 flex flex-col justify-center items-center overflow-hidden"/>-->
             <card-wrapper :posts="posts" />

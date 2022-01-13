@@ -1,5 +1,5 @@
 <template>
-    <Heart v-if="isShowLoad" />
+    <!-- <Heart v-if="isShowLoad" /> -->
     <div class="flex flex-col items-center h-screen">
         <div class="flex flex-col p-20 items-center w-full">
             <img class="w-32" alt="Vue logo" src="../assets/logo.png">

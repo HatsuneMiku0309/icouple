@@ -1,15 +1,15 @@
 <template>
-  <Heart v-if="isShowLoad" />
-  
-  <div class="flex flex-col h-full w-full">
+  <!-- <Heart v-if="isShowLoad" /> -->
+  <div name="main" class="relative flex flex-col h-full w-full">
     <div class="flex flex-row h-12 flex-shrink-0 items-center absolute">
       <div class="w-screen">
-        <div class="absolute left-1 top-2 inline-block" @click="showSetting"><i class="couple-icon setting before:bg-cover before:bg-no-repeat before:w-6 before:h-6 md:before:w-8 md:before:h-8 before:relative before:inline-block"></i></div>
-        <div class="absolute right-1 top-2 inline-block" @click="showNotify"><i class="couple-icon notify before:bg-cover before:bg-no-repeat before:w-6 before:h-6 md:before:w-8 md:before:h-8 before:relative before:inline-block"></i></div>
+        <div class="absolute left-3 top-2 inline-block z-50" @click="showSetting"><i class="couple-icon setting before:bg-cover before:bg-no-repeat before:w-6 before:h-6 md:before:w-8 md:before:h-8"></i></div>
+        <div class="absolute right-3 top-2 inline-block z-50" @click="showNotify(isShowNotify.data)"><i class="couple-icon notify before:bg-cover before:bg-no-repeat before:w-6 before:h-6 md:before:w-8 md:before:h-8"></i></div>
+        <DropDown :isShowNotify="isShowNotify"/>
       </div>
     </div>
-    <div class="flex-grow overflow-hidden p-2">
-      <router-view class="h-full w-full"/>
+    <div @touchstart="touchStartHandler" @touchmove="move" @touchend="touchEndHandler" class="relative flex-grow overflow-hidden p-2">
+      <router-view id="container" class="h-full w-full"/>
     </div>
     <Menu />
   </div>
@@ -20,11 +20,20 @@ import { defineComponent, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Heart from '../components/Loaders/Heart.vue';
 import Menu from '../components/Menu.vue';
+import DropDown from '../components/DropDown.vue';
 
 export default defineComponent({
   name: 'Index',
-  components: { Heart, Menu },
+  components: { Heart, Menu, DropDown },
   setup() {
+    enum RefreshStatus {
+      non,
+      doing
+    };
+    let refreshStatus = RefreshStatus.non;
+    let startOffset = 0;
+    let endOffset = 0;
+    let mainElem: HTMLElement;
     const router = useRouter();
     const isShowLoad = ref(false);
     const checkToken = () => {
@@ -41,30 +50,62 @@ export default defineComponent({
     };
     checkToken();
 
-    const showNotify = () => {
-      alert('showNotify');
+    const isShowNotify = reactive({ data: false});
+    const showNotify = (show: boolean) => {
+      isShowNotify.data = !show;
     };
     const showSetting = () => {
       alert('showSetting');
     }
     const move = (e: any) => {
-      console.log('x: ', e.touches[0].clientX);
-      console.log('y: ', e.touches[0].clientY);
+      // if (e.targetTouches[0].clientY <= startOffset) {
+      //   return ;
+      // }
+      if (mainElem?.scrollTop !== 0) {
+        // if (refreshStatus === RefreshStatus.doing) {
+        //   let rDiffOffset = e.targetTouches[0].clientY - startOffset;
+        //   rDiffOffset = rDiffOffset <= 0 ? 0 : rDiffOffset;
+        //   mainElem.style.top = rDiffOffset + 'px';
+        //   mainElem.scrollTop = 0;
+        // }
+        return
+      };
+      if (refreshStatus === RefreshStatus.non && mainElem.scrollTop === 0) {
+        refreshStatus = RefreshStatus.doing;
+        startOffset = e.targetTouches[0].clientY;
+      }
+      endOffset = e.targetTouches[0].clientY;
+      let diffOffset = endOffset - startOffset;
+      // console.log(diffOffset);
+      if (diffOffset > 0) {
+        // console.log(diffOffset)
+        mainElem.style.top = diffOffset + 'px';
+      }
     }
-    const myTouchStartHandler = () => {
-      console.log('touch');
+    const touchStartHandler = (e: any) => {
+      refreshStatus = RefreshStatus.non
+      startOffset = e.targetTouches[0].clientY;
+      mainElem = <HTMLElement> document.getElementById('container');
     };
-    const myTouchStartHandler2 = () => {
-      console.log('touch2');
+    const touchEndHandler = (e: any) => {
+      refreshStatus = RefreshStatus.non
+      let diffOffset = endOffset - startOffset;
+      endOffset = 0;
+      startOffset = 0;
+      if (diffOffset > 100) {
+        // reload
+      }
+      mainElem!.style.top = '0px';
     };
 
     return {
       isShowLoad,
+      isShowNotify,
       showNotify,
       showSetting,
       move,
-      myTouchStartHandler,
-      myTouchStartHandler2
+      touchStartHandler,
+      touchEndHandler
     }
   }
 });
