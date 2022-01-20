@@ -4,7 +4,7 @@
             <ul class="p-2 w-full">
                 <li v-for="(notify, index) in notifys" :key="index">
                     <div class="flex pb-4">
-                        <a class="flex w-full overflow-hidden" :href="'/message/' + notify.id">
+                        <a class="flex w-full overflow-hidden" :href="'/notify/message/' + notify.id">
                             <i class="couple-icon notify-message smile before:mt-2 before:bg-cover before:bg-no-repeat before:w-5 before:h-5 before:mr-2"></i>
                             <div class="overflow-hidden">
                                 <div class="font-bold whitespace-nowrap overflow-ellipsis w-full overflow-hidden" :title="notify.title">

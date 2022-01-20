@@ -3,13 +3,19 @@
   <div name="main" class="relative flex flex-col h-full w-full">
     <div class="flex flex-row h-12 flex-shrink-0 items-center absolute">
       <div class="w-screen">
-        <div class="absolute left-3 top-2 inline-block z-50" @click="showSetting"><i class="couple-icon setting before:bg-cover before:bg-no-repeat before:w-6 before:h-6 md:before:w-8 md:before:h-8"></i></div>
-        <div class="absolute right-3 top-2 inline-block z-50" @click="showNotify(isShowNotify.data)"><i class="couple-icon notify before:bg-cover before:bg-no-repeat before:w-6 before:h-6 md:before:w-8 md:before:h-8"></i></div>
+        <div class="absolute left-3 top-2 inline-block z-50">
+          <a href="/setting">
+            <i class="couple-icon setting before:bg-cover before:bg-no-repeat before:w-6 before:h-6 md:before:w-8 md:before:h-8"></i>
+          </a>
+        </div>
+        <div class="absolute right-3 top-2 inline-block z-50" @click="showNotify(isShowNotify.data)"
+          ><i class="couple-icon notify before:bg-cover before:bg-no-repeat before:w-6 before:h-6 md:before:w-8 md:before:h-8"></i>
+        </div>
         <DropDown :isShowNotify="isShowNotify"/>
       </div>
     </div>
-    <div @touchstart="touchStartHandler" @touchmove="move" @touchend="touchEndHandler" class="relative flex-grow overflow-hidden p-2">
-      <router-view id="container" class="h-full w-full"/>
+    <div id="container" class="relative flex-grow overflow-hidden pb-3">
+      <router-view @touchstart.stop="touchStartHandler" @touchend.stop="touchEndHandler" id="content" class="h-full w-full"/>
     </div>
     <Menu />
   </div>
@@ -33,7 +39,7 @@ export default defineComponent({
     let refreshStatus = RefreshStatus.non;
     let startOffset = 0;
     let endOffset = 0;
-    let mainElem: HTMLElement;
+    let contentElem: HTMLElement;
     const router = useRouter();
     const isShowLoad = ref(false);
     const checkToken = () => {
@@ -54,40 +60,27 @@ export default defineComponent({
     const showNotify = (show: boolean) => {
       isShowNotify.data = !show;
     };
-    const showSetting = () => {
-      alert('showSetting');
-    }
     const move = (e: any) => {
-      // if (e.targetTouches[0].clientY <= startOffset) {
-      //   return ;
-      // }
-      if (mainElem?.scrollTop !== 0) {
-        // if (refreshStatus === RefreshStatus.doing) {
-        //   let rDiffOffset = e.targetTouches[0].clientY - startOffset;
-        //   rDiffOffset = rDiffOffset <= 0 ? 0 : rDiffOffset;
-        //   mainElem.style.top = rDiffOffset + 'px';
-        //   mainElem.scrollTop = 0;
-        // }
-        return
-      };
-      if (refreshStatus === RefreshStatus.non && mainElem.scrollTop === 0) {
-        refreshStatus = RefreshStatus.doing;
-        startOffset = e.targetTouches[0].clientY;
-      }
-      endOffset = e.targetTouches[0].clientY;
-      let diffOffset = endOffset - startOffset;
-      // console.log(diffOffset);
-      if (diffOffset > 0) {
-        // console.log(diffOffset)
-        mainElem.style.top = diffOffset + 'px';
+      if (refreshStatus === RefreshStatus.doing) {
+        endOffset = e.targetTouches[0].clientY;
+        let diffOffset = endOffset - startOffset;
+        if (diffOffset > 0) {
+          contentElem.style.top = diffOffset >= 0 ? `${diffOffset }px` : '0px';
+          contentElem.style.height = `calc(100% - ${diffOffset}px)`;
+        }
       }
     }
     const touchStartHandler = (e: any) => {
       refreshStatus = RefreshStatus.non
       startOffset = e.targetTouches[0].clientY;
-      mainElem = <HTMLElement> document.getElementById('container');
+      contentElem = <HTMLElement> document.getElementById('content');
+      if (contentElem.scrollTop === 0) {
+        refreshStatus = RefreshStatus.doing
+        contentElem.addEventListener('touchmove', move, { passive: true });
+      }
     };
     const touchEndHandler = (e: any) => {
+      contentElem.removeEventListener('touchmove', move)
       refreshStatus = RefreshStatus.non
       let diffOffset = endOffset - startOffset;
       endOffset = 0;
@@ -95,15 +88,14 @@ export default defineComponent({
       if (diffOffset > 100) {
         // reload
       }
-      mainElem!.style.top = '0px';
+      contentElem!.style.top = '0px';
+      contentElem.style.height = '100%';
     };
 
     return {
       isShowLoad,
       isShowNotify,
       showNotify,
-      showSetting,
-      move,
       touchStartHandler,
       touchEndHandler
     }

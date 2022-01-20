@@ -75,18 +75,18 @@ div a:nth-child(5).active ~ .indicator {
 
 .indicator::before {
   content: '';
-  top: 1.5rem;
-  left: -1.75rem;
+  top: 1.43rem;
+  left: -1.85rem;
   border-top-right-radius: 1.75rem;
-  box-shadow: 0 -0.5rem 0 0 white;
+  box-shadow: 0 -0.6rem 0 0 white;
 }
 
 .indicator::after {
   content: '';
-  top: 1.5rem;
-  right: -1.75rem;
+  top: 1.43rem;
+  right: -1.85rem;
   border-top-left-radius: 1.75rem;
-  box-shadow: 0 -0.5rem 0 0 white;
+  box-shadow: 0 -0.6rem 0 0 white;
 }
 
 .couple-icon.active {

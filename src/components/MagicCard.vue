@@ -1,8 +1,11 @@
 <template>
   <!-- <magic-card class="h-screen w-screen absolute z-10"/> -->
-  <div class="body">
-    <div class="card">
+  <div class="flex items-center">
+    <div class="card mt-14">
+      <div class="flex flex-col">
+        <img class="w-32 h-32" src="../assets/logo.png" alt="">
         {{ title }}
+      </div>
     </div>
   </div>
 </template>
@@ -27,27 +30,17 @@ export default defineComponent({
 }
 
 :root {
-  --card-height: 13rem;
-  --card-width: calc(var(--card-height) * 2.9);
+  --card-height: 50vh;
+  --card-width: calc(var(--card-height) * 3.7);
 } 
 
 @media (max-width:414px){
   :root {
-    --card-height: 13rem;
-    --card-width: calc(var(--card-height) * 1.4);
+    --card-height: 70vh;
+    --card-width: calc(var(--card-height) * 0.52);
   }  
 }
-
-.body {
-  /*min-height: 100vh;*/
-  /*background: #212534;*/
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: cursive;
-}
-
-
+ 
 .card {
   background: #191c29;
   width: var(--card-width);
@@ -93,7 +86,7 @@ export default defineComponent({
 .card::after {
   position: absolute;
   content: "";
-  top: calc(var(--card-height) / 10);
+  top: calc(var(--card-height) / 6);
   left: 0;
   right: 0;
   z-index: -1;
