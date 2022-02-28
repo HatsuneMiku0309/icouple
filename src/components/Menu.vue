@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from 'vue';
+import { reactive } from 'vue';
 
-export default defineComponent({
+export default {
   setup() {
     let menuList = reactive([
       { icon: 'home', title: 'Home', to: '/', isActive: true },
@@ -42,7 +42,7 @@ export default defineComponent({
       selectMenu
     };
   },
-})
+}
 </script>
 
 <style scoped>

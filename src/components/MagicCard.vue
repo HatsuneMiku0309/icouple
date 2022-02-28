@@ -1,25 +1,83 @@
 <template>
   <!-- <magic-card class="h-screen w-screen absolute z-10"/> -->
   <div class="flex items-center">
-    <div class="card mt-14">
-      <div class="flex flex-col">
-        <img class="w-32 h-32" src="../assets/logo.png" alt="">
-        {{ title }}
+    <div id="magic-card" @touchstart.stop="touchStartHandler" @touchend.stop="touchEndHandler" class="card mt-14">
+      <div class="flex flex-col w-full h-full overflow-y-hidden">
+        <div class="h-1/2 flex justify-center items-center relative">
+          <img class="h-5/6 w-11/12 object-none rounded-full z-10" :src="'/src/assets/images/' + post.image" alt="">
+          <img class="absolute h-full w-full object-none rounded-full blur-md border-2" :src="'/src/assets/images/' + post.image" alt="">
+        </div>
+        <span class="w-full mt-4 font-bold">{{ post.title }}</span>
+        <span class="flex-grow flex-shrink w-full h-full text-sm whitespace-pre-wrap overflow-y-scroll">{{ post.description }}
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+export default {
+  name: 'MagicCard',
+  props: ['post', 'touchEnabled'],
+  setup(props) {
+    // 弧度
+    // const RAD = 57.29577951;
+    let contentElem: HTMLElement;
+    let touchEndHandler, touchStartHandler;
+    if (props.touchEnabled) {
+      let startOffset = 0;
+      let endOffset = 0;
+      const move = (e: any) => {
+        endOffset = e.targetTouches[0].clientX;
+        let diffOffset = endOffset - startOffset;
+        if (Math.abs(diffOffset) <= 40) {
+          contentElem.style.transform = 'none';
 
-export default defineComponent({
-    name: 'MagicCard',
-    props: ['title'],
-    setup() {
-        
-    },
-})
+          return false;
+        };
+        const degrees = diffOffset * 0.086;
+        const rad = degrees * (Math.PI / 180);
+        const xOffset = rad * 250;
+        const yOffset = Math.abs(rad * 25);
+        contentElem.style.transform = `rotate(${degrees}deg) translateX(${xOffset}%) translateY(-${yOffset}%)`;
+        // .card-reverse {
+        //     transform: rotate(-25deg) translateX(-45%) translateY(-5%);
+        // }
+
+        // .card-firward {
+        //     transform: rotate(25deg) translateX(45%) translateY(-5%);
+        // }
+
+
+        // if (refreshStatus === RefreshStatus.doing) {
+        //     endOffset = e.targetTouches[0].clientY;
+        //     let diffOffset = endOffset - startOffset;
+        //     if (diffOffset > 0) {
+        //     contentElem.style.top = diffOffset >= 0 ? `${diffOffset }px` : '0px';
+        //     contentElem.style.height = `calc(100% - ${diffOffset}px)`;
+        //     }
+        // }
+      }
+      touchStartHandler = (e: any) => {
+        startOffset = e.targetTouches[0].clientX;
+        endOffset = 0;
+        contentElem = <HTMLElement> document.getElementById('magic-card');
+        contentElem.addEventListener('touchmove', move, { passive: true });
+      };
+      touchEndHandler = (e: any) => {
+        startOffset = 0;
+        endOffset = 0;
+        contentElem.removeEventListener('touchmove', move)
+        contentElem.style.transform = 'none';
+      };
+    }
+
+    return {
+        touchStartHandler,
+        touchEndHandler,
+    }
+  },
+}
 </script>
 
 <style lang="css">
@@ -32,15 +90,15 @@ export default defineComponent({
 :root {
   --card-height: 50vh;
   --card-width: calc(var(--card-height) * 3.7);
-} 
+}
 
 @media (max-width:414px){
   :root {
     --card-height: 70vh;
     --card-width: calc(var(--card-height) * 0.52);
-  }  
+  }
 }
- 
+
 .card {
   background: #191c29;
   width: var(--card-width);

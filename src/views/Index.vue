@@ -22,13 +22,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Heart from '../components/Loaders/Heart.vue';
 import Menu from '../components/Menu.vue';
 import DropDown from '../components/DropDown.vue';
 
-export default defineComponent({
+export default {
   name: 'Index',
   components: { Heart, Menu, DropDown },
   setup() {
@@ -47,7 +47,7 @@ export default defineComponent({
       if (!token) {
         isShowLoad.value = true;
 
-        // demo redirect login page when no has token 
+        // demo redirect login page when no has token
         setTimeout(() => {
           isShowLoad.value = false;
           router.replace('/login');
@@ -85,8 +85,8 @@ export default defineComponent({
       let diffOffset = endOffset - startOffset;
       endOffset = 0;
       startOffset = 0;
-      if (diffOffset > 100) {
-        // reload
+      if (diffOffset > 300) {
+        console.log(router.go(0));
       }
       contentElem!.style.top = '0px';
       contentElem.style.height = '100%';
@@ -100,7 +100,7 @@ export default defineComponent({
       touchEndHandler
     }
   }
-});
+};
 </script>
 
 
