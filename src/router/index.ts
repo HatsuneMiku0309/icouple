@@ -9,18 +9,25 @@ import * as process from 'process';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'Home',
+    name: 'Main',
     component: Index,
     children: [
       {
         path: '/',
+        name: 'Home',
         component: Home,
       },
       {
         path: 'fate',
+        name: 'Fate',
         component: Fate,
       },
     ],
+  },
+  {
+    path: '/activity/:id',
+    name: 'Activity',
+    component: Index
   },
   {
     path: '/about',

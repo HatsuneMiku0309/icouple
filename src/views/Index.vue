@@ -4,9 +4,9 @@
     <div class="flex flex-row h-12 flex-shrink-0 items-center absolute">
       <div class="w-screen">
         <div class="absolute left-3 top-2 inline-block z-50">
-          <a href="/setting">
+          <router-link :to="{ name: 'Setting', params: { preRouter: $route.name } }">
             <i class="couple-icon setting before:bg-cover before:bg-no-repeat before:w-6 before:h-6 md:before:w-8 md:before:h-8"></i>
-          </a>
+          </router-link>
         </div>
         <div class="absolute right-3 top-2 inline-block z-50" @click="showNotify(isShowNotify.data)"
           ><i class="couple-icon notify before:bg-cover before:bg-no-repeat before:w-6 before:h-6 md:before:w-8 md:before:h-8"></i>

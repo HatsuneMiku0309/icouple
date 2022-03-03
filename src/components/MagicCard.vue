@@ -3,13 +3,18 @@
   <div class="flex items-center">
     <div id="magic-card" @touchstart.stop="touchStartHandler" @touchend.stop="touchEndHandler" class="card mt-14">
       <div class="flex flex-col w-full h-full overflow-y-hidden">
-        <div class="h-1/2 flex justify-center items-center relative">
-          <img class="h-5/6 w-11/12 object-none rounded-full z-10" :src="'/src/assets/images/' + post.image" alt="">
+        <div class="h-full flex justify-center items-center relative">
+          <img class="h-5/6 w-5/6 object-none rounded-full z-10" :src="'/src/assets/images/' + post.image" alt="">
           <img class="absolute h-full w-full object-none rounded-full blur-md border-2" :src="'/src/assets/images/' + post.image" alt="">
         </div>
         <span class="w-full mt-4 font-bold">{{ post.title }}</span>
-        <span class="flex-grow flex-shrink w-full h-full text-sm whitespace-pre-wrap overflow-y-scroll">{{ post.description }}
+        <span class="flex-grow flex-shrink w-full h-full text-sm whitespace-pre-wrap overflow-y-scroll">
+          {{ post.description }}
         </span>
+        <div class="flex justify-around">
+          <router-link to="/"><span>details</span></router-link>
+          <router-link to="/"><span>details2</span></router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -94,8 +99,8 @@ export default {
 
 @media (max-width:414px){
   :root {
-    --card-height: 70vh;
-    --card-width: calc(var(--card-height) * 0.52);
+    --card-height: 75vh;
+    --card-width: calc(var(--card-height) * 0.5);
   }
 }
 

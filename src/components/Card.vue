@@ -1,11 +1,11 @@
 <template>
-  <div class="w-full h-full">
-    <a :href="'/activity/' + item.id">
+  <div class="w-full h-full max-h-96">
+    <router-link :to="{ name: 'Activity', params: { id: item.id } }">
       <img class="w-1/2 h-1/2 m-auto" alt="Vue logo" src="../assets/logo.png">
-      <div class="w-full h-full border-t p-2 break-words whitespace-pre-wrap">
+      <div class="w-full h-full border-t p-2 truncate whitespace-pre-wrap">
         {{ item.title }}
       </div>
-    </a>
+    </router-link>
   </div>
 </template>
 

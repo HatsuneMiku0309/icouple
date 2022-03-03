@@ -22,7 +22,20 @@ export default {
     for (let i = 1 ; i <= 10 ; i++) {
       mockData.push({
         id: i,
-        title: 'banner' + i
+        title: `banner${i}
+
+          dasnkl
+
+          asdfasdfasfwewqf
+sadfsdaf
+
+as
+dfas
+df
+sad
+fasd
+f
+        `
       });
     }
     const posts = reactive(mockData);

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full h-full">
     <div class="flex items-center h-12">
-      <div class="ml-3"><a href="/">&lt;</a></div>
+      <div class="ml-3"><router-link :to="{ name: $route.params.preRouter || 'Home' }">&lt;</router-link></div>
     </div>
     <div class="w-full h-32">
       account
@@ -18,9 +18,12 @@
 
 <script>
 import { reactive } from '@vue/reactivity';
+import { useRoute } from 'vue-router';
 export default {
   name: 'Setting',
   setup() {
+    const route = useRoute();
+    console.log(route.params);
     let _list = [];
     for (let i = 0 ; i < 10 ; i++) {
       _list.push({
