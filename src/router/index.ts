@@ -4,7 +4,6 @@ import Login from '../views/Login.vue';
 import Home from '../views/Home.vue';
 import Fate from '../views/Fate.vue';
 import Setting from '../views/Setting.vue';
-import * as process from 'process';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -52,7 +51,7 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory((<any> import.meta).env.VITE_BASE_URL),
   routes,
 });
 
