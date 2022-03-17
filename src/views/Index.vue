@@ -27,11 +27,31 @@ import { useRouter } from 'vue-router';
 import Heart from '../components/Loaders/Heart.vue';
 import Menu from '../components/Menu.vue';
 import DropDown from '../components/DropDown.vue';
+// import { addDoc, collection, doc, getDocs, getFirestore, setDoc, getDoc } from 'firebase/firestore/lite';
+// import { app } from '../apis/utils';
 
 export default {
   name: 'Index',
   components: { Heart, Menu, DropDown },
   setup() {
+
+    // const callapi = async () => {
+    //   const db = getFirestore(app);
+    //   const a = collection(db, 'USERS');
+    //   const b = await getDocs(a);
+    //   console.log(b);
+    //   const qaq = doc(db, 'USERS', b.docs[0].id);
+    //   const bbb = await getDoc(qaq);
+    //   console.log(bbb);
+    //   // await addDoc(a, { test: 1 });
+    //   // await setDoc(qaq, { aaaaa: 321 }, { merge: true });
+    //   // const c = b.docs.map((d) => d.data());
+    //   // console.log(c);
+    //   // console.log(c[0].CREATE_TIME.seconds);
+    //   // console.log(new Date(c[0].CREATE_TIME.seconds * 1000));
+    //   // console.log(a);
+    // }
+    // callapi();
     enum RefreshStatus {
       non,
       doing
