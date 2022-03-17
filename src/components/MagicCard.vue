@@ -4,8 +4,8 @@
     <div id="magic-card" @touchstart.stop="touchStartHandler" @touchend.stop="touchEndHandler" class="card mt-14">
       <div class="flex flex-col w-full h-full overflow-y-hidden">
         <div class="h-full flex justify-center items-center relative">
-          <img class="h-5/6 w-5/6 object-none rounded-full z-10" :src="'/images/' + post.image" alt="">
-          <img class="absolute h-full w-full object-none rounded-full blur-md border-2" :src="'/images/' + post.image" alt="">
+          <img class="h-5/6 w-5/6 object-none rounded-full z-10" :src="'./images/' + post.image" alt="">
+          <img class="absolute h-full w-full object-none rounded-full blur-md border-2" :src="'./images/' + post.image" alt="">
         </div>
         <span class="w-full mt-4 font-bold">{{ post.title }}</span>
         <span class="flex-grow flex-shrink w-full h-full text-sm whitespace-pre-wrap overflow-y-scroll">
