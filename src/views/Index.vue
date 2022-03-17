@@ -15,7 +15,7 @@
       </div>
     </div>
     <div id="container" class="relative flex-grow overflow-hidden pb-3">
-      <router-view @touchstart.stop="touchStartHandler" @touchend.stop="touchEndHandler" id="content" class="h-full w-full"/>
+      <router-view @touchstart.stop.passive="touchStartHandler" @touchend.stop="touchEndHandler" id="content" class="h-full w-full"/>
     </div>
     <Menu />
   </div>
