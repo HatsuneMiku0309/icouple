@@ -49,9 +49,9 @@ const routes: RouteRecordRaw[] = [
     component: Setting,
   },
 ];
-
+// (<any> import.meta).env.VITE_BASE_URL
 const router = createRouter({
-  history: createWebHistory((<any> import.meta).env.VITE_BASE_URL),
+  history: createWebHistory(),
   routes,
 });
 
