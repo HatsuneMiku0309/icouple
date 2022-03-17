@@ -2,7 +2,7 @@
   <!-- <Heart v-if="isShowLoad" /> -->
   <div class="flex flex-col items-center h-screen">
     <div class="flex flex-col p-20 items-center w-full">
-      <img class="w-32" alt="Vue logo" src="../assets/logo.png">
+      <img class="w-32" alt="Vue logo" src="@/assets/logo.png">
       <div class="mt-5">
         ICouple
       </div>
